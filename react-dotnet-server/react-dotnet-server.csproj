@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>react_dotnet_server</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.15" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\react-dotnet-core\react-dotnet-core.csproj" />
+  </ItemGroup>
+
+   <PropertyGroup>
+    <PublishDir>$(SolutionDir)build\</PublishDir>
+  </PropertyGroup>
+
+  <Target Name="BuildReact" BeforeTargets="PrepareForPublish">
+    <Exec WorkingDirectory="$(SolutionDir)react-dotnet-client" Command="bun install" />
+    <Exec WorkingDirectory="$(SolutionDir)react-dotnet-client" Command="bun run build" />
+  </Target>
+
+  <Target Name="CopyReactBuild" AfterTargets="Publish">
+    <RemoveDir Directories="$(PublishDir)wwwroot" />
+    <MakeDir Directories="$(PublishDir)wwwroot" />
+    <ItemGroup>
+      <ReactBuildFiles Include="$(SolutionDir)react-dotnet-client/dist/**/*" />
+    </ItemGroup>
+    <Copy
+      SourceFiles="@(ReactBuildFiles)"
+      DestinationFiles="@(ReactBuildFiles->'$(PublishDir)wwwroot/%(RecursiveDir)%(Filename)%(Extension)')"
+      SkipUnchangedFiles="true" />
+</Target>
+
+</Project>
