@@ -61,7 +61,8 @@ This project demonstrates a setup that enables deploying a .NET backend and a Re
     <Copy
         SourceFiles="@(ReactBuildFiles)"
         DestinationFiles="@(ReactBuildFiles->'$(PublishDir)wwwroot/%(RecursiveDir)%(Filename)%(Extension)')"
-        SkipUnchangedFiles="true" />
+        SkipUnchangedFiles="true"
+    />
   </Target>
   ```
 
@@ -107,5 +108,3 @@ This project demonstrates a setup that enables deploying a .NET backend and a Re
 - Using this setup avoids the need for separate servers or proxies during deployment.
 
 - You can extend this by adding authentication, backend services, or advanced API routes.
-
----
