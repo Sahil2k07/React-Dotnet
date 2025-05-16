@@ -44,8 +44,7 @@ This project demonstrates a setup that enables deploying a .NET backend and a Re
 
   ```xml
   <PropertyGroup>
-  <PublishDir>$(SolutionDir)build\</PublishDir>
-
+    <PublishDir>$(SolutionDir)build\</PublishDir>
   </PropertyGroup>
 
   <Target Name="BuildReact" BeforeTargets="PrepareForPublish">
@@ -57,12 +56,12 @@ This project demonstrates a setup that enables deploying a .NET backend and a Re
     <RemoveDir Directories="$(PublishDir)wwwroot" />
     <MakeDir Directories="$(PublishDir)wwwroot" />
     <ItemGroup>
-    <ReactBuildFiles Include="$(SolutionDir)react-dotnet-client/dist/**/*" />
+        <ReactBuildFiles Include="$(SolutionDir)react-dotnet-client/dist/**/*" />
     </ItemGroup>
     <Copy
-    SourceFiles="@(ReactBuildFiles)"
-    DestinationFiles="@(ReactBuildFiles->'$(PublishDir)wwwroot/%(RecursiveDir)%(Filename)%(Extension)')"
-    SkipUnchangedFiles="true" />
+        SourceFiles="@(ReactBuildFiles)"
+        DestinationFiles="@(ReactBuildFiles->'$(PublishDir)wwwroot/%(RecursiveDir)%(Filename)%(Extension)')"
+        SkipUnchangedFiles="true" />
   </Target>
   ```
 
